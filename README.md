@@ -63,18 +63,23 @@ Model used:
 bert-base-uncased
 ```
 
-Architecture:
+## Model Architecture
 
-```
-Input Text
-   ↓
-BERT Transformer Encoder
-   ↓
-[CLS] Token Representation
-   ↓
-Linear Classification Layer
-   ↓
-Sentiment Prediction
+The sentiment classification system is built on top of the **BERT transformer architecture**.  
+The contextual embedding of the `[CLS]` token is used as the representation for classification.
+
+```mermaid
+flowchart LR
+
+A[Input Text] --> B[Tokenizer<br/>BERT Tokenization]
+
+B --> C[BERT Transformer Encoder<br/>12 Layers Self-Attention]
+
+C --> D[[CLS] Token Representation]
+
+D --> E[Linear Classification Layer]
+
+E --> F[Sentiment Prediction<br/>Positive / Negative]
 ```
 
 Training objective: Cross-entropy loss for binary sentiment classification.
@@ -82,6 +87,30 @@ Training objective: Cross-entropy loss for binary sentiment classification.
 ---
 
 # Experimental Setup
+
+## Experiment Workflow
+
+The experimental pipeline evaluates the robustness of transformer models under **domain shift conditions**.
+
+```mermaid
+flowchart LR
+
+A[IMDB Dataset] --> B[Fine-tune BERT Model]
+
+B --> C[Trained Model Checkpoint]
+
+C --> D[Evaluation on IMDB Test Set]
+
+C --> E[Evaluation on SST-2 Dataset<br/>Domain Shift]
+
+D --> F[Performance Metrics<br/>Accuracy, F1 Score]
+
+E --> F
+
+F --> G[Confidence Calibration Analysis]
+
+F --> H[Error Analysis<br/>Misclassified Samples]
+```
 
 ## Datasets
 
@@ -117,6 +146,25 @@ Optimizer | AdamW |
 Max Sequence Length | 128 |
 
 ---
+## Evaluation Pipeline
+
+```mermaid
+flowchart TB
+
+A[Model Predictions] --> B[Confusion Matrix]
+
+A --> C[Confidence Distribution]
+
+A --> D[Reliability Diagram]
+
+A --> E[Error Analysis]
+
+B --> F[Performance Evaluation]
+
+C --> G[Calibration Analysis]
+
+D --> G
+```
 
 # Results
 
@@ -135,11 +183,11 @@ Observation: Model performance decreases slightly under domain shift.
 
 ## IMDB
 
-![IMDB Confusion Matrix](imdb_confusion_matrix.png)
+![IMDB Confusion Matrix](results/imdb_confusion_matrix.png)
 
 ## SST-2
 
-![SST2 Confusion Matrix](sst2_confusion_matrix.png)
+![SST2 Confusion Matrix](results/sst2_confusion_matrix.png)
 
 ---
 
@@ -147,19 +195,19 @@ Observation: Model performance decreases slightly under domain shift.
 
 ## IMDB Confidence Distribution
 
-![IMDB Confidence Histogram](imdb_confidence_hist.png)
+![IMDB Confidence Histogram](results/imdb_confidence_hist.png)
 
 ## IMDB Reliability Diagram
 
-![IMDB Reliability Diagram](imdb_reliability.png)
+![IMDB Reliability Diagram](results/imdb_reliability.png)
 
 ## SST-2 Confidence Distribution
 
-![SST2 Confidence Histogram](sst2_confidence_hist.png)
+![SST2 Confidence Histogram](results/sst2_confidence_hist.png)
 
 ## SST-2 Reliability Diagram
 
-![SST2 Reliability Diagram](sst2_reliability.png)
+![SST2 Reliability Diagram](results/sst2_reliability.png)
 
 ---
 
@@ -253,7 +301,21 @@ python experiments/confidence_analysis.py
 ```
 python experiments/error_analysis.py
 ```
+## Running with Docker
 
+Build the Docker image:
+
+```
+docker build -t transformer-domain-shift
+```
+
+Run the container:
+
+```
+docker run -it --gpus all transformer-domain-shift
+```
+
+This will create an isolated environment containing all dependencies required to reproduce the experiments.
 ---
 
 # Future Work
