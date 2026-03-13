@@ -7,5 +7,3 @@ __pycache__
 .git
 models/*.pt
 models/*.pth
-results/
-notebooks/

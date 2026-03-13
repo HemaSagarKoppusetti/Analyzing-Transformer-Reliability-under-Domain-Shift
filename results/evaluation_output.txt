@@ -1,0 +1,15 @@
+===== RESULTS ===
+
+IMDB Test Results
+Accuracy: 0.88264
+F1 Score: 0.8843059936908517
+Confusion Matrix:
+ [[10853  1647]
+ [ 1287 11213]]
+
+SST-2 Test Results
+Accuracy: 0.8589449541284404
+F1 Score: 0.870116156282999
+Confusion Matrix:
+ [[337  91]
+ [ 32 412]]
