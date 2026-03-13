@@ -1,0 +1,37 @@
+name: transformer-domain-shift
+
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+
+  # Core scientific libraries
+  - numpy
+  - pandas
+  - scipy
+
+  # Visualization
+  - matplotlib
+  - seaborn
+
+  # Machine learning utilities
+  - scikit-learn
+
+  # PyTorch (GPU compatible)
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cudatoolkit=11.8
+
+  # NLP libraries
+  - pip
+  - pip:
+      - transformers
+      - datasets
+      - tqdm
+      - sentencepiece
+      - accelerate
+      - huggingface-hub

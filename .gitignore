@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+.git
+models/*.pt
+models/*.pth
+results/
+notebooks/
