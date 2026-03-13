@@ -75,7 +75,7 @@ A[Input Text] --> B[Tokenizer<br/>BERT Tokenization]
 
 B --> C[BERT Transformer Encoder<br/>12 Layers Self-Attention]
 
-C --> D[[CLS] Token Representation]
+C --> D[CLS Token Representation]
 
 D --> E[Linear Classification Layer]
 
